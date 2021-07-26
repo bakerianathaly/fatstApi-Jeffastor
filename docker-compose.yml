@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  server:
+    build:
+      context: ./backend #ruta de donde esta el Dockerfile
+      dockerfile: Dockerfile #Se coloca la ruta de donde esta el dockerFile
+    image: 
+      fastapi_app #nombre de la imagen que se va a levantar
+    volumes: #persistencia de los datos generados y utilizados por los contenedores Docker
+      - ./backend/:/backend/
+    command: uvicorn app.api.server:app --reload --workers 1 --host 0.0.0.0 --port 8000
+    #Comand con el que va a levantar el servidor
+    env_file:
+      - ./backend/.env #Ruta de donde esta las variables de entorno
+    ports:
+      - 8000:8000 #En que puerto va a levantar
