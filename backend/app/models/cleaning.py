@@ -1,4 +1,5 @@
-from typing import Optional
+from os import name
+from typing import Optional, List
 from enum import Enum
 from app.models.core import IDModelMixin, CoreModel
 from pydantic import Field
@@ -34,4 +35,4 @@ class CleaningPublic(IDModelMixin, CleaningBase):
     name: str
     price: float
     cleaning_type: CleaningType
-    description: str
+    description: Optional[str]

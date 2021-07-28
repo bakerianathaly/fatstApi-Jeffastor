@@ -2,6 +2,7 @@
 
 from app.db.repositories.base import BaseRepository
 from app.models.cleaning import CleaningCreate, CleaningUpdate, CleaningInDB, CleaningPublic
+from typing import List 
 
 INSERT_CLEANING_QUERY = """
     INSERT INTO cleaning (name, description, price, cleaning_type)
@@ -12,7 +13,7 @@ INSERT_CLEANING_QUERY = """
 QUERY_CLEANING_BY_NAME = """
     SELECT *
     FROM cleaning
-    WHERE name = :name
+    WHERE name = :search_name
 """
 
 class CleaningsRepository(BaseRepository):
@@ -25,6 +26,8 @@ class CleaningsRepository(BaseRepository):
         cleaning = await self.db.fetch_one(query=INSERT_CLEANING_QUERY, values=query_values)
         return CleaningInDB(**cleaning)
 
-    async def get_cleaning_by_name(self, *, search_name: str) -> CleaningPublic:
-        cleaning = await self.db.fetch_one(query=QUERY_CLEANING_BY_NAME, values=search_name)
+    async def get_cleaning_by_name(self, *, search_name: str) -> List[CleaningPublic]:
+        search_name = {'search_name':search_name}
+        cleaning = await self.db.fetch_all(query=QUERY_CLEANING_BY_NAME, values=search_name)
+        
         return cleaning
