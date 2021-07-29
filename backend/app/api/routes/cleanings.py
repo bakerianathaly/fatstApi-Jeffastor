@@ -17,15 +17,13 @@ async def get_all_cleanings() -> List[dict]:
 
 @router.post("/", response_model=CleaningPublic, name="cleanings:create-cleaning", status_code=HTTP_201_CREATED)
 async def create_new_cleaning(
-    new_cleaning: CleaningCreate = Body(..., embed=True),
-    cleanings_repo: CleaningsRepository = Depends(get_repository(CleaningsRepository)),
-) -> CleaningPublic:
-    print('body', new_cleaning)
+        new_cleaning: CleaningCreate = Body(..., embed=True),
+        cleanings_repo: CleaningsRepository = Depends(get_repository(CleaningsRepository)),
+    ) -> CleaningPublic:
     created_cleaning = await cleanings_repo.create_cleaning(new_cleaning=new_cleaning)
     return created_cleaning
 
 @router.get('/cleaning/{name}', response_model=List[CleaningPublic])
-async def get_cleaning_name(name: str, cleanings_repo: CleaningsRepository = Depends(get_repository(CleaningsRepository))) -> CleaningPublic:
-    print('Nombre: ', name)
+async def get_cleaning_name(name: str, cleanings_repo: CleaningsRepository = Depends(get_repository(CleaningsRepository))) -> List[CleaningPublic]:
     get_cleanings = await cleanings_repo.get_cleaning_by_name(search_name=name)
     return get_cleanings
