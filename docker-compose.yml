@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.8'
 services:
   server:
     build:
@@ -17,6 +17,7 @@ services:
 
   db:
     image: postgres:13-alpine
+    restart: always
     volumes:
       #Los volúmenes existen para que nuestros contenedores puedan mantener el estado entre ejecuciones
       - postgres_data:/var/lib/postgresql/data/
@@ -24,6 +25,17 @@ services:
       - ./backend/.env/
     ports:
       - 5432:5432
+  
+  # Contenedor para Pgadmin
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
   
 volumes:
   postgres_data: 

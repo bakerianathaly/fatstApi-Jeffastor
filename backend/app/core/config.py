@@ -9,7 +9,6 @@ VERSION = "1.0.0"
 API_PREFIX = "/api"
 SECRET_KEY = config("SECRET_KEY", cast=Secret, default="CHANGEME")
 POSTGRES_USER = config("POSTGRES_USER", cast=str)
-print(POSTGRES_USER)
 POSTGRES_PASSWORD = config("POSTGRES_PASSWORD", cast=Secret)
 POSTGRES_SERVER = config("POSTGRES_SERVER", cast=str, default="db")
 POSTGRES_PORT = config("POSTGRES_PORT", cast=str, default="5432")
