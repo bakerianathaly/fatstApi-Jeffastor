@@ -16,6 +16,11 @@ QUERY_CLEANING_BY_NAME = """
     WHERE name = :search_name
 """
 
+QUERY_ALL_CLEANING = """
+    SELECT * 
+    FROM cleaning
+"""
+
 class CleaningsRepository(BaseRepository):
     """"
     All database actions associated with the Cleaning resource
@@ -30,3 +35,8 @@ class CleaningsRepository(BaseRepository):
         cleaning = await self.db.fetch_all(query=QUERY_CLEANING_BY_NAME, values=search_name)
         
         return cleaning
+
+    async def get_all_cleaning(self) -> List[CleaningPublic]:
+        all_cleaning = await self.db.fetch_all(query = QUERY_ALL_CLEANING)
+
+        return all_cleaning
